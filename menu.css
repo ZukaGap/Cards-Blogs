@@ -1,0 +1,23 @@
+h1,h2 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    font-size: 100px;
+}
+
+body {
+    background-color: #b2bec3;
+}
+
+h2 {
+    font-size: 65px;    
+}
+
+h2:hover,a:hover {
+    color:#e84118;
+}
+
+a {
+    text-decoration: none;
+    color:black;
+}
+
