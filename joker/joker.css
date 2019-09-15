@@ -29,7 +29,7 @@ table, th, td {
   }
 
   td input {
-    display: inline;
+    display: inline-block;
     width: 80px;
     cursor: default;
   }
