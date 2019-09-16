@@ -2,6 +2,7 @@
 // dro tito xels ramdeni dautmes
 // vinc xelshi gafuchda da tavisi ver waigo grafa gawitldes da wagebuli gamwvandes
 // modzravi fokusi unda gawitldes tu ver waiyvana tavisi shevsebis dros(wayvanis shevseba)
+// bolo kacze avtomaturad sheitanos wagebuli kartebis odenoba 
 
 var names = document.querySelectorAll("thead input");
 var shuffleBtn = document.getElementById("shuffle");
@@ -10,7 +11,7 @@ var calls = document.querySelectorAll("td input:first-of-type");
 var results = document.querySelectorAll("td input:nth-of-type(even)");
 var callBtns = document.querySelectorAll("aside table button");
 var xishti = document.getElementById("xishti");
-var players = [player1 = {	id: 1	}, player2 = {	id: 2	}, player3 = {	id: 3	}, player4 = {	id: 4	}];
+var players = [player1 = {	id: 1, score:0	}, player2 = {	id: 2, score:0	}, player3 = {	id: 3, score:0	}, player4 = {	id: 4, score:0	}];
 var gotNames = false;
 var started = false;
 var round = 0;
@@ -18,6 +19,7 @@ var turn = 0;
 var activePlayer = null;
 var roundOver = false;
 var turnCount = 0;
+var wagebuliCount = 0;
 
 //----------------------------------------------------------------------
 
@@ -50,7 +52,7 @@ function init(){
 
 	callBtns.forEach(function(call){
 		call.addEventListener("click", function(){
-			if(activePlayer !== null && round < 16 /*&& activePlayer.calls[round].value === ""*/){				
+			if(activePlayer !== null && round < 16){				
 				if(turnCount < 4)
 				{
 					activePlayer.calls[round].value = call.value;
@@ -59,6 +61,7 @@ function init(){
 				}
 				else if(turnCount > 3)
 				{
+					addScore(activePlayer.calls[round].value, call.value);
 					activePlayer.calls[round].value +=" - " + call.value;
 					activePlayer.calls[round].classList.remove("live");
 				}
@@ -133,19 +136,72 @@ function enableBtns(){
 //--------------------GAME FUNCTIONS----------------------
 
 function playRound(){
-	if(roundOver){
+	if(roundOver)
+	{
 		round++;
 		turnCount = 0;
 		roundOver = false;
+		validateButtons();
+		wagebuliCount = 0;
 	}
-	if(round < 16){
+	if(round < 16)
+	{
 		activePlayer = players[(round + turn) % 4];
 		if(turnCount < 4)
 			activePlayer.calls[round].classList.add("turn");
 		else 
 			activePlayer.calls[round].classList.add("live");
 	}
-	else{
+	else
+	{
 		console.log("Game Over");
+	}
+}
+
+function addScore(wasagebi,wagebuli)
+{
+	console.log(activePlayer+"movida");
+	var score = 0;
+
+	if( wasagebi === 9 && wagebuli === 9 )
+	{
+		score = 900; 
+	}
+	else if(wasagebi !== "პასი" && wagebuli === "პასი")
+	{
+		score -= Number(xishti.value);
+	}
+	else if(wasagebi === wagebuli)
+	{
+		score = wasagebi === "პასი" ? 50 : wagebuli * 50 + 50;
+	}
+	else
+	{
+		score= wagebuli * 10;
+	}
+	console.log(score);
+	activePlayer.results[round].value = score;
+	activePlayer.score += score;
+
+	if(wagebuli !== "პასი")
+	{
+		validateButtons(false,wagebuli);
+		wagebuliCount+=Number(wagebuli);
+		console.log(wagebuliCount);
+	}
+}
+
+function validateButtons(enable=true,wagebuli = 0)
+{
+	for(var i = 0; i < wagebuli; i++)
+	{
+		callBtns[callBtns.length - 1 - i - wagebuliCount].setAttribute("disabled", true);
+	}
+
+	if(enable)
+	{
+		callBtns.forEach(function(call){
+			call.removeAttribute("disabled");
+		});
 	}
 }

@@ -172,7 +172,7 @@
             </table>
             <aside>
                     <button id="start" disabled>დაწყება</button>
-                    <input id="xishti" type="number" placeholder="ხიშტი" />
+                    <input id="xishti" type="number" min="0" step="1" oninput="validity.valid||(value='');" placeholder="ხიშტი" />
                     <button id="shuffle" disabled>ატუზვა</button>
                     <br />
                     <table>
