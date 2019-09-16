@@ -14,6 +14,8 @@ var started = false;
 var round = 0;
 var turn = 0;
 var activePlayer = null;
+var roundOver = false;
+var turnCount = 0;
 
 //----------------------------------------------------------------------
 
@@ -34,12 +36,26 @@ function init(){
 		play();
 	});
 
+	callBtns.forEach(function(call){
+		call.addEventListener("click", function(){
+			if(activePlayer !== null && round < 16 && activePlayer.calls[round].value === ""){
+				turn++;
+				turnCount++;
+				activePlayer.calls[round].value = call.value;
+				activePlayer.calls[round].classList.remove("turn");
+				if(turnCount === 4){
+					roundOver = true;
+				}
+				playRound();
+			}
+		});
+	})
+
 	checkNames();
 	shuffle();
 }
 
 function play(){
-	activePlayer = players[0];
 	playRound();
 }
 
@@ -93,28 +109,16 @@ function enableBtns(){
 //--------------------GAME FUNCTIONS----------------------
 
 function playRound(){
-	activePlayer.calls[round].classList.add("turn");
-	makeCall();
+	if(roundOver){
+		round++;
+		turnCount = 0;
+		roundOver = false;
+	}
+	if(round < 16){
+		activePlayer = players[(round + turn) % 4];
+		activePlayer.calls[round].classList.add("turn");
+	}
+	else{
+		console.log("Game Over");
+	}
 }
-
-function makeCall(){
-	callBtns.forEach(function(call){
-		call.addEventListener("click", function callClick(){
-			turn++;
-			activePlayer.calls[round].value = call.value;
-			activePlayer.calls[round].classList.remove("turn");
-			// removeListeners();
-			// if(turn > 0 && turn % 4 !== 0){
-			// 	activePlayer = players[round + (turn % 4)];
-			// 	playRound();
-			// }
-		});
-	})
-}
-
-// function removeListeners(){
-// 	callBtns.forEach(function(call){
-// 		console.log("removed from", call.value);
-// 		call.removeEventListener("click", callClick, true);
-// 	});
-// }
