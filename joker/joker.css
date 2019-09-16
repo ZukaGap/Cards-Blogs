@@ -77,3 +77,18 @@ aside td {
 .turn {
   background-color: aquamarine;
 }
+
+.live {
+  background-color: cyan;
+}
+
+#xishti {
+  display: inline-block;
+  width: 100px;
+  height: auto;
+  padding-left: 5px; 
+}
+
+.required {
+  border: 1px solid red;
+}

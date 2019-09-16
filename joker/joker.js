@@ -1,6 +1,7 @@
 // tamashis dro atuzvidan dasrulebamde
 // dro tito xels ramdeni dautmes
 // vinc xelshi gafuchda da tavisi ver waigo grafa gawitldes da wagebuli gamwvandes
+// modzravi fokusi unda gawitldes tu ver waiyvana tavisi shevsebis dros(wayvanis shevseba)
 
 var names = document.querySelectorAll("thead input");
 var shuffleBtn = document.getElementById("shuffle");
@@ -8,6 +9,7 @@ var startBtn = document.getElementById("start");
 var calls = document.querySelectorAll("td input:first-of-type");
 var results = document.querySelectorAll("td input:nth-of-type(even)");
 var callBtns = document.querySelectorAll("aside table button");
+var xishti = document.getElementById("xishti");
 var players = [player1 = {	id: 1	}, player2 = {	id: 2	}, player3 = {	id: 3	}, player4 = {	id: 4	}];
 var gotNames = false;
 var started = false;
@@ -32,22 +34,44 @@ function init(){
 	})
 
 	startBtn.addEventListener("click",function(){
-		this.setAttribute("disabled", true);
-		play();
+		if(xishti.value !== "")
+		{
+			if(xishti.classList.contains("required"))
+				xishti.classList.remove("required");
+			this.setAttribute("disabled", true);
+			play();
+		}
+		else 
+		{
+			xishti.focus();
+			xishti.classList.add("required");
+		}
 	});
 
 	callBtns.forEach(function(call){
 		call.addEventListener("click", function(){
-			if(activePlayer !== null && round < 16 && activePlayer.calls[round].value === ""){
-				turn++;
+			if(activePlayer !== null && round < 16 /*&& activePlayer.calls[round].value === ""*/){				
+				if(turnCount < 4)
+				{
+					activePlayer.calls[round].value = call.value;
+					activePlayer.calls[round].classList.remove("turn");
+					
+				}
+				else if(turnCount > 3)
+				{
+					activePlayer.calls[round].value +=" - " + call.value;
+					activePlayer.calls[round].classList.remove("live");
+				}
 				turnCount++;
-				activePlayer.calls[round].value = call.value;
-				activePlayer.calls[round].classList.remove("turn");
-				if(turnCount === 4){
+
+				if(turnCount === 8)
+				{
 					roundOver = true;
 				}
+				turn++;
 				playRound();
 			}
+
 		});
 	})
 
@@ -116,7 +140,10 @@ function playRound(){
 	}
 	if(round < 16){
 		activePlayer = players[(round + turn) % 4];
-		activePlayer.calls[round].classList.add("turn");
+		if(turnCount < 4)
+			activePlayer.calls[round].classList.add("turn");
+		else 
+			activePlayer.calls[round].classList.add("live");
 	}
 	else{
 		console.log("Game Over");
