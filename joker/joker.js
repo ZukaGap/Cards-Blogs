@@ -61,7 +61,7 @@ function init(){
 				}
 				else if(turnCount > 3)
 				{
-					addScore(activePlayer.calls[round].value, call.value);
+					addScore(activePlayer,activePlayer.calls[round].value, call.value);
 					activePlayer.calls[round].value +=" - " + call.value;
 					activePlayer.calls[round].classList.remove("live");
 				}
@@ -158,17 +158,17 @@ function playRound(){
 	}
 }
 
-function addScore(wasagebi,wagebuli)
+function addScore(player,wasagebi,wagebuli)
 {
 	var score = 0;
 
-	if( Number(wasagebi) === 9 && Number(wagebuli) === 9 )
-	{
-		score = 900; 
-	}
-	else if(wasagebi !== "პასი" && wagebuli === "პასი")
+	if( wasagebi !== "პასი" && wagebuli === "პასი")
 	{
 		score -= Number(xishti.value);
+	}
+	else if(Number(wasagebi) === 9 && Number(wagebuli) === 9)
+	{
+		score = 900; 
 	}
 	else if(wasagebi === wagebuli)
 	{
@@ -178,15 +178,18 @@ function addScore(wasagebi,wagebuli)
 	{
 		score= wagebuli * 10;
 	}
-	console.log(score);
-	activePlayer.results[round].value = score;
-	activePlayer.score += score;
+
+	player.results[round].value = score;
+	player.score += score;
 
 	if(wagebuli !== "პასი")
 	{
 		validateButtons(false,wagebuli);
 		wagebuliCount+=Number(wagebuli);
 		console.log(wagebuliCount);
+	}
+	if(wagebuliCount === 9 && wasagebi !== null){
+		autoFill();
 	}
 }
 
@@ -203,4 +206,14 @@ function validateButtons(enable=true,wagebuli = 0)
 			call.removeAttribute("disabled");
 		});
 	}
+}
+
+function autoFill(){
+	roundOver = true;
+	players.forEach(function(player){
+		if(player.results[round].value === ""){
+			addScore(player,null, "პასი");
+			turn++;
+		}
+	})
 }
