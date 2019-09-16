@@ -1,5 +1,11 @@
+@font-face {
+  font-family: "bpg_extrasquare_mtavruli_2009";
+  src: url("../fonts/bpg_extrasquare_mtavruli_2009.ttf");
+}
+
 body {
   background-color: #dfe6e9;
+  font-family: "bpg_extrasquare_mtavruli_2009";
 }
 
 table, th, td {
@@ -10,7 +16,7 @@ table, th, td {
 
 table th {
   background-color:#b2bec3;
-  color: white;
+  color: black;
   padding: 1px;
 }
 
@@ -112,5 +118,15 @@ aside td {
 
 .success-full {
   color: greenyellow;
+  font-weight: bolder;
+}
+
+.better {
+  color: rgb(44, 175, 44);
+  font-weight: bolder;
+}
+
+.worse {
+  color: rgb(122, 4, 4);
   font-weight: bolder;
 }
