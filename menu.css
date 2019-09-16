@@ -17,6 +17,7 @@ h2:hover,a:hover {
 }
 
 a {
+    font-family: 'Ribeye', cursive;
     text-decoration: none;
     color:black;
 }
