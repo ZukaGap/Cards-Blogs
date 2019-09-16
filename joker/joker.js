@@ -1,16 +1,14 @@
 // tamashis dro atuzvidan dasrulebamde
 // dro tito xels ramdeni dautmes
-// vinc xelshi gafuchda da tavisi ver waigo grafa gawitldes da wagebuli gamwvandes
-// modzravi fokusi unda gawitldes tu ver waiyvana tavisi shevsebis dros(wayvanis shevseba)
 
 var names = document.querySelectorAll("thead input");
-var shuffleBtn = document.getElementById("shuffle");
-var startBtn = document.getElementById("start");
 var calls = document.querySelectorAll("td input:first-of-type");
 var results = document.querySelectorAll("td input:nth-of-type(even)");
+var shuffleBtn = document.getElementById("shuffle");
+var startBtn = document.getElementById("start");
 var callBtns = document.querySelectorAll("aside table button");
 var xishti = document.getElementById("xishti");
-var players = [player1 = {	id: 1, score:0	}, player2 = {	id: 2, score:0	}, player3 = {	id: 3, score:0	}, player4 = {	id: 4, score:0	}];
+var players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}];
 var gotNames = false;
 var started = false;
 var round = 0;
@@ -30,8 +28,9 @@ init();
 function init(){
 	players.forEach(function(player)
 	{
-		player.calls = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(1)");
-		player.results = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(2)");
+		player.calls = document.querySelectorAll("td:nth-of-type(" + (player.id + 2) + ") input:nth-of-type(1)");
+		player.results = document.querySelectorAll("td:nth-of-type(" + (player.id + 2) + ") input:nth-of-type(2)");
+		player.scoreDisplays = document.querySelectorAll(".scores th:nth-of-type(" + (player.id + 2) +")");
 	})
 
 	startBtn.addEventListener("click",function(){
@@ -64,7 +63,6 @@ function init(){
 					activePlayer.calls[round].classList.remove("live");
 				}
 				turnCount++;
-				console.log(turn, turnCount);
 				if(turnCount === 8)
 				{
 					roundOver = true;
@@ -133,6 +131,9 @@ function enableBtns(){
 function playRound(){
 	if(roundOver)
 	{
+		if((round + 1) % 4 === 0)
+			writeScores();
+
 		round++;
 		turnCount = 0;
 		roundOver = false;
@@ -191,7 +192,7 @@ function addScore(wasagebi,wagebuli,player=activePlayer)
 	}
 
 	player.results[round].value = score;
-	player.score += score;
+	player.score += score / 100;
 
 	if(wagebuli !== "პასი")
 	{
@@ -240,4 +241,37 @@ function autoFill(all=true){
 
 function calcOutcome(){
 	callBtns[callBtns.length - 1 - wasagebiCount].setAttribute("disabled", true);
+}
+
+//--------------------DISPLAY FUNCTIONS----------------------
+
+function writeScores(){
+	var player;
+	var quarter = Math.floor(round / 4);
+	var lastQuarterScore;
+	var scoreDisplay;
+	for(var i = 0; i < 4; i++){
+		player = players[i];
+		player.score = roundDecOne(player.score);
+		scoreDisplay = player.scoreDisplays[quarter];
+		if(quarter === 0){
+			lastQuarterScore = 0;
+		}
+		else{
+			lastQuarterScore = Number(player.scoreDisplays[quarter - 1].innerHTML);
+		}
+		if(player.score > lastQuarterScore){
+			scoreDisplay.classList.add("better");
+		}
+		else if(player.score < lastQuarterScore){
+			scoreDisplay.classList.add("worse");
+		}
+		scoreDisplay.innerHTML = player.score;
+	}
+}
+
+//--------------------MATH FUNCTIONS----------------------
+
+function roundDecOne(value) {
+	return Number(Math.round(value+'e'+1)+'e-'+1);
 }
