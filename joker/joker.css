@@ -94,3 +94,23 @@ aside td {
 .required {
   border: 1px solid red;
 }
+
+.fail-full {
+  color: red;
+  font-weight: bolder;
+}
+
+.fail-half {
+  color: rgb(136, 36, 36);
+  font-weight: bolder;
+}
+
+.success {
+  color: greenyellow;
+  font-weight: bolder;
+}
+
+.success-full {
+  color: greenyellow;
+  font-weight: bolder;
+}

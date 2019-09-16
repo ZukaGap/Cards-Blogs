@@ -2,7 +2,6 @@
 // dro tito xels ramdeni dautmes
 // vinc xelshi gafuchda da tavisi ver waigo grafa gawitldes da wagebuli gamwvandes
 // modzravi fokusi unda gawitldes tu ver waiyvana tavisi shevsebis dros(wayvanis shevseba)
-// bolo kacze avtomaturad sheitanos wagebuli kartebis odenoba 
 
 var names = document.querySelectorAll("thead input");
 var shuffleBtn = document.getElementById("shuffle");
@@ -165,18 +164,22 @@ function addScore(player,wasagebi,wagebuli)
 	if( wasagebi !== "პასი" && wagebuli === "პასი")
 	{
 		score -= Number(xishti.value);
+		player.results[round].classList.add("fail-full");
 	}
 	else if(Number(wasagebi) === 9 && Number(wagebuli) === 9)
 	{
 		score = 900; 
+		player.results[round].classList.add("success-full");
 	}
 	else if(wasagebi === wagebuli)
 	{
 		score = wasagebi === "პასი" ? 50 : wagebuli * 50 + 50;
+		player.results[round].classList.add("success");
 	}
 	else
 	{
 		score= wagebuli * 10;
+		player.results[round].classList.add("fail-half");
 	}
 
 	player.results[round].value = score;
