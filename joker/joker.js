@@ -160,10 +160,9 @@ function playRound(){
 
 function addScore(wasagebi,wagebuli)
 {
-	console.log(activePlayer+"movida");
 	var score = 0;
 
-	if( wasagebi === 9 && wagebuli === 9 )
+	if( Number(wasagebi) === 9 && Number(wagebuli) === 9 )
 	{
 		score = 900; 
 	}

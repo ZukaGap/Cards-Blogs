@@ -22,9 +22,10 @@ table tr:nth-child(odd) {
 }
 
 td {
-  width: 180px;
-  height: 30px;
+  width: 100px;
+  height: 20px;
   text-align: center;
+  padding: 3px;
 }
 
 input {
@@ -32,11 +33,12 @@ input {
     border: none;
     outline: none;
     height: 100%;
+    width:100%;
 }
 
 td input {
   display: inline-block;
-  width: 80px;
+  width: 50px;
   cursor: default;
 }
 
