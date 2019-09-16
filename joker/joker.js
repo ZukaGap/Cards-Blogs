@@ -19,6 +19,7 @@ var activePlayer = null;
 var roundOver = false;
 var turnCount = 0;
 var wagebuliCount = 0;
+var wasagebiCount = 0;
 
 //----------------------------------------------------------------------
 
@@ -29,7 +30,6 @@ init();
 function init(){
 	players.forEach(function(player)
 	{
-		console.log(player.id);
 		player.calls = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(1)");
 		player.results = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(2)");
 	})
@@ -56,7 +56,7 @@ function init(){
 				{
 					activePlayer.calls[round].value = call.value;
 					activePlayer.calls[round].classList.remove("turn");
-					
+					wasagebiCount += call.value === "პასი" ? 0 : Number(call.value);
 				}
 				else if(turnCount > 3)
 				{
@@ -99,7 +99,6 @@ function checkNames()
 				this.setAttribute("disabled", true);
 				count++;
 				gotNames = count ===  4 ? true : false;
-				console.log(gotNames);
 				enableBtns(gotNames);
 			}
 		});
@@ -110,11 +109,9 @@ function shuffle()
 {
 	shuffleBtn.addEventListener("click",function()
 	{
-		console.log("shuffled");
 		this.style.backgroundColor="green";
 		this.setAttribute("disabled", true);
 		var first = Math.floor(Math.random()*4);
-		console.log("First Player: ",first+1);
 		for(var i=0; i < first; i++){
 			for(var j=1; j < names.length; j++)
 			{
@@ -142,14 +139,22 @@ function playRound(){
 		roundOver = false;
 		validateButtons();
 		wagebuliCount = 0;
+		wasagebiCount = 0;
 	}
 	if(round < 16)
 	{
 		activePlayer = players[(round + turn) % 4];
-		if(turnCount < 4)
+		if(turnCount < 4){
 			activePlayer.calls[round].classList.add("turn");
-		else 
+			if(turnCount === 3 && wasagebiCount <= 9)
+				calcOutcome();
+		}
+		else {
+			if(turnCount === 4)
+				validateButtons();
 			activePlayer.calls[round].classList.add("live");
+		}
+			
 	}
 	else
 	{
@@ -189,7 +194,6 @@ function addScore(player,wasagebi,wagebuli)
 	{
 		validateButtons(false,wagebuli);
 		wagebuliCount+=Number(wagebuli);
-		console.log(wagebuliCount);
 	}
 	if(wagebuliCount === 9 && wasagebi !== null){
 		autoFill();
@@ -215,8 +219,12 @@ function autoFill(){
 	roundOver = true;
 	players.forEach(function(player){
 		if(player.results[round].value === ""){
-			addScore(player,null, "პასი");
+			addScore(player,player.calls[round].value, "პასი");
 			turn++;
 		}
 	})
+}
+
+function calcOutcome(){
+	callBtns[callBtns.length - 1 - wasagebiCount].setAttribute("disabled", true);
 }
