@@ -3,9 +3,14 @@
   src: url("../fonts/bpg_extrasquare_mtavruli_2009.ttf");
 }
 
+* {
+  font-family: "bpg_extrasquare_mtavruli_2009";
+  font-weight: 900;
+  text-align: center;
+}
+
 body {
   background-color: #dfe6e9;
-  font-family: "bpg_extrasquare_mtavruli_2009";
 }
 
 table, th, td {
@@ -17,7 +22,7 @@ table, th, td {
 table th {
   background-color:#b2bec3;
   color: black;
-  padding: 1px;
+  padding: 0px;
 }
 
 table tr:nth-child(even) {
@@ -25,6 +30,12 @@ table tr:nth-child(even) {
 }
 table tr:nth-child(odd) {
   background-color: #fff;
+}
+
+th input {
+  height: 21px;
+  width: calc(100% - 4px);
+  padding: 2px;
 }
 
 td {
@@ -49,13 +60,13 @@ td input {
 }
 
 td input:first-of-type {
-  margin-right: 10px;    
+  margin-right: 10px;
+  width: 85px;
   cursor: pointer;
 }
 
 #shuffle {
   float: right;
-  background-color: #dcdde1;
 }
 
 section {
