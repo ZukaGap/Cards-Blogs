@@ -1,38 +1,53 @@
 // tamashis dro atuzvidan dasrulebamde
 // dro tito xels ramdeni dautmes
 // vinc xelshi gafuchda da tavisi ver waigo grafa gawitldes da wagebuli gamwvandes
-var joker = {
-	names: document.querySelectorAll("thead input"),
-	shuffleBtn: document.getElementById("shuffle"),
-	startBtn: document.getElementById("start"),
-	calls: document.querySelectorAll("td input:first-of-type"),
-	results: document.querySelectorAll("td input:nth-of-type(even)"),
-	players: [player1 = {	id: 1	}, player2 = {	id: 2	}, player3 = {	id: 3	}, player4 = {	id: 4	}],
-	realNames: [],
-	count: 0,
 
-	init: function(){
-		this.players.forEach(function(player)
-		{
-			console.log(player.id);
-			player.calls = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(1)");
-			player.results = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(2)");
-		})
+var names = document.querySelectorAll("thead input");
+var shuffleBtn = document.getElementById("shuffle");
+var startBtn = document.getElementById("start");
+var calls = document.querySelectorAll("td input:first-of-type");
+var results = document.querySelectorAll("td input:nth-of-type(even)");
+var callBtns = document.querySelectorAll("aside table button");
+var players = [player1 = {	id: 1	}, player2 = {	id: 2	}, player3 = {	id: 3	}, player4 = {	id: 4	}];
+var gotNames = false;
+var started = false;
+var round = 0;
+var turn = 0;
+var activePlayer = null;
 
-		this.count = assignNames(this.names,this.count,this.startBtn,this.realNames);
-		shuffle(this.shuffleBtn,this.count,this.names);
-	}
+//----------------------------------------------------------------------
 
+init();
+
+//----------------------------------------------------------------------
+
+function init(){
+	players.forEach(function(player)
+	{
+		console.log(player.id);
+		player.calls = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(1)");
+		player.results = document.querySelectorAll("td:nth-of-type("+(player.id+1)+") input:nth-of-type(2)");
+	})
+
+	startBtn.addEventListener("click",function(){
+		this.setAttribute("disabled", true);
+		play();
+	});
+
+	checkNames();
+	shuffle();
 }
 
-//------------------------
+function play(){
+	activePlayer = players[0];
+	playRound();
+}
 
-joker.init();
+//--------------------INIT FUNCTIONS----------------------
 
-//------------------------
-
-function assignNames(names,count,startBtn,realNames)
+function checkNames()
 {
+	var count = 0;
 	names.forEach(function(name)
 	{
 		name.addEventListener("focusout", function()
@@ -41,45 +56,65 @@ function assignNames(names,count,startBtn,realNames)
 			{
 				this.setAttribute("disabled", true);
 				count++;
-				if( count === 4 )
-				{
-					getNames(names,realNames);
-					count = true;
-					// startBtn.addEventListener("click",function(){
-
-					// });
-				}
+				gotNames = count ===  4 ? true : false;
+				console.log(gotNames);
+				enableBtns(gotNames);
 			}
 		});
 	});
-return count;
-}
+};
 
-function getNames(names,realNames)
-{
-	names.forEach(function(name)
-	{
-		realNames.push(name.value);
-	});
-}
-
-function shuffle(shuffleBtn,count,names)
+function shuffle()
 {
 	shuffleBtn.addEventListener("click",function()
 	{
-		if(count === true)
-		{
-			this.style.backgroundColor="green";
-			count=false;
-			var first = Math.floor(Math.random()*4);
-			console.log("First Player: ",first+1);
-			for(var i=0; i < first; i++)
+		console.log("shuffled");
+		this.style.backgroundColor="green";
+		this.setAttribute("disabled", true);
+		var first = Math.floor(Math.random()*4);
+		console.log("First Player: ",first+1);
+		for(var i=0; i < first; i++){
+			for(var j=1; j < names.length; j++)
 			{
-				for(var j=1; j < names.length; j++)
-				{
-					names[j-1].value = [names[j].value, names[j].value = names[j-1].value][0];
-				}			
-			}
+				names[j-1].value = [names[j].value, names[j].value = names[j-1].value][0];
+			}			
 		}
+
 	});
+};
+
+function enableBtns(){
+	if(gotNames){
+		shuffleBtn.removeAttribute("disabled");
+		startBtn.removeAttribute("disabled");
+	}
 }
+
+//--------------------GAME FUNCTIONS----------------------
+
+function playRound(){
+	activePlayer.calls[round].classList.add("turn");
+	makeCall();
+}
+
+function makeCall(){
+	callBtns.forEach(function(call){
+		call.addEventListener("click", function callClick(){
+			turn++;
+			activePlayer.calls[round].value = call.value;
+			activePlayer.calls[round].classList.remove("turn");
+			// removeListeners();
+			// if(turn > 0 && turn % 4 !== 0){
+			// 	activePlayer = players[round + (turn % 4)];
+			// 	playRound();
+			// }
+		});
+	})
+}
+
+// function removeListeners(){
+// 	callBtns.forEach(function(call){
+// 		console.log("removed from", call.value);
+// 		call.removeEventListener("click", callClick, true);
+// 	});
+// }
