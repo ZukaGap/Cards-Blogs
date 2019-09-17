@@ -1,22 +1,23 @@
 // tamashis dro atuzvidan dasrulebamde
 // dro tito xels ramdeni dautmes
 
-var names = document.querySelectorAll("thead input");
-var calls = document.querySelectorAll("td input:first-of-type");
-var results = document.querySelectorAll("td input:nth-of-type(even)");
-var shuffleBtn = document.getElementById("shuffle");
-var startBtn = document.getElementById("start");
-var callBtns = document.querySelectorAll("aside table button");
-var xishti = document.getElementById("xishti");
-var players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}];
-var started = false;
-var round = 0;
-var turn = 0;
-var activePlayer = null;
-var roundOver = false;
-var turnCount = 0;
-var wagebuliCount = 0;
-var wasagebiCount = 0;
+var names = document.querySelectorAll("thead input"),
+calls = document.querySelectorAll("td input:first-of-type"),
+results = document.querySelectorAll("td input:nth-of-type(even)"),
+shuffleBtn = document.getElementById("shuffle"),
+startBtn = document.getElementById("start"),
+callBtns = document.querySelectorAll("aside table button"),
+xishti = document.getElementById("xishti"),
+players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}],
+started = false,
+round = 0,
+turn = 0,
+activePlayer = null,
+roundOver = false,
+turnCount = 0,
+wagebuliCount = 0,
+wasagebiCount = 0;
+
 
 //----------------------------------------------------------------------
 
@@ -95,7 +96,6 @@ function checkNames()
 				this.classList.contains("required") ? this.classList.remove("required") : null;
 				this.setAttribute("disabled", true);
 				count++;
-				console.log(count);
 				if(count === 3)
 					listenToLastInput();
 			}
@@ -140,7 +140,6 @@ function listenToLastInput(){
 	names.forEach(function(name){
 		if(name.value === ""){
 			name.addEventListener("keyup", function(){
-				console.log(this.value);
 				if(this.value !== "" && isUnique(this.value))
 					toggleBtns(true)
 				else
@@ -269,7 +268,6 @@ function autoFill(all=true){
 			addScore(activePlayer.calls[round].value, "პასი");
 		else
 			addScore(activePlayer.calls[round].value, String(9 - wagebuliCount));
-			console.log(wagebuliCount);
 		turn++;
 		playRound();
 	}
