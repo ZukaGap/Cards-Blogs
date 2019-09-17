@@ -213,7 +213,7 @@ function playRound(){
 	}
 	else
 	{
-		clearInterval(timer.key);
+		gameTime.stop();
 		console.log("Game Over");
 	}
 }
