@@ -77,21 +77,31 @@ section {
 
 aside {
     justify-self: center;
+    border: none;
 }
 
 aside  table {
   width: 250px;
   height: 250px;
+  border: none;
 }
 
 aside table button {
   height: 100%;
   width: 100%;    
-  font-size: 1.5em;
+  font-size: 1.5em;  
+  border-radius: 10px;
+  border: none;
+}
+
+table thead td{
+  border: none;
 }
 
 aside td {
   padding: 1px;
+  background-color: #dfe6e9;
+  border: none;
 }
 
 .turn {
@@ -141,4 +151,15 @@ aside td {
 .worse {
   color: rgb(122, 4, 4);
   font-weight: bolder;
+}
+
+.timer {
+  font-size: 25px;
+  margin-top: 15px;
+  color: #ff3f34;
+}
+
+#seconds {
+  font-size: 20px;
+  color: #ff3f34;
 }

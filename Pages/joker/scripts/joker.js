@@ -1,5 +1,5 @@
-// tamashis dro atuzvidan dasrulebamde
-// dro tito xels ramdeni dautmes
+//premiaze gasvla moshlis setingebi
+// ujraze orjer daklikebisas shegvedzlos monacemis chasworeba an msgavsi ram sityvaze ro shegveshalos ramdenis wageba gvinda
 
 //--------------------VARIABLES----------------------
 
@@ -8,8 +8,24 @@ shuffleBtn = document.getElementById("shuffle"),
 startBtn = document.getElementById("start"),
 callBtns = document.querySelectorAll("aside table button"),
 xishti = document.getElementById("xishti"),
+timeDisplay = {
+	minutes: document.getElementById("minutes"),
+	seconds: document.getElementById("seconds"),
+	updateMinutes: (minutes ) => {		
+		this.minutes.innerHTML = minutes;	
+	},
+
+	updateSeconds: (seconds) => {		
+		this.seconds.innerHTML = seconds;		
+	},
+
+	init: function()  {
+		this.updateMinutes(0);
+		this.updateSeconds(0);
+	}
+}
 players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}],
-gameTime = new Timer();
+gameTime = new Timer(timeDisplay);
 
 let round = 0,
 turn = 0,
@@ -21,14 +37,18 @@ wasagebiCount = 0;
 
 //--------------------CONSTRUCTORS----------------------
 
-function Timer(){
+function Timer(display){
 	this.seconds = 0;
-	this.minutes = 0;
+	this.minutes = 0;	
 	this.start = function(){
-			this.key = setInterval( () => {
-			console.log(++this.seconds);
+			display.init();
+			this.key = setInterval( () => {	
+			display.updateSeconds(++this.seconds);			
 			if(this.seconds % 60 === 0)
-				console.log(++this.minutes);
+			{
+				display.updateMinutes(++this.minutes);
+				this.seconds = this.seconds % 60 ;
+			}
 		}, 1000);
 	};
 	this.stop = function(){

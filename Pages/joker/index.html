@@ -171,34 +171,39 @@
                 </tbody>                
             </table>
             <aside>
-                    <button id="start" disabled>დაწყება</button>
-                    <input id="xishti" type="number" min="0" step="1" oninput="validity.valid||(value='');" placeholder="ხიშტი" />
-                    <button id="shuffle" disabled>ატუზვა</button>
-                    <br />
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="3"> <button value="პასი">პასი</button></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><button value="1">1</button></td>
-                                <td><button value="2">2</button></td>
-                                <td><button value="3">3</button></td>
-                            </tr>
-                            <tr>
-                                <td><button value="4">4</button></td>
-                                <td><button value="5">5</button></td>
-                                <td><button value="6">6</button></td>
-                            </tr>
-                            <tr>
-                                <td><button value="7">7</button></td>
-                                <td><button value="8">8</button></td>
-                                <td><button value="9">9</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <button id="start" disabled>დაწყება</button>
+                <input id="xishti" type="number" min="0" step="1" oninput="validity.valid||(value='');" placeholder="ხიშტი" />
+                <button id="shuffle" disabled>ატუზვა</button>
+                <br />
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3"> <button value="პასი">პასი</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button value="1">1</button></td>
+                            <td><button value="2">2</button></td>
+                            <td><button value="3">3</button></td>
+                        </tr>
+                        <tr>
+                            <td><button value="4">4</button></td>
+                            <td><button value="5">5</button></td>
+                            <td><button value="6">6</button></td>
+                        </tr>
+                        <tr>
+                            <td><button value="7">7</button></td>
+                            <td><button value="8">8</button></td>
+                            <td><button value="9">9</button></td>
+                        </tr>
+                    </tbody>                        
+                </table>
+                <div class="timer">
+                    <span id="minutes"></span>
+                    <span>:</span>
+                    <span id="seconds"></span>
+                </div>
             </aside>            
         </section>
                 
