@@ -321,6 +321,7 @@ function writeScores(){
 		}
 		scoreDisplay.innerHTML = player.score;
 	}
+	console.log("Number", (quarter+1), "Quarter:", gameTime.minutes, "Minutes and", gameTime.seconds, "Seconds.");
 }
 
 //--------------------MATH FUNCTIONS----------------------
