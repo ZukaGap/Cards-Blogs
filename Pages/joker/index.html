@@ -3,6 +3,7 @@
     <head>        
         <meta charset="utf-8" />
         <link rel="stylesheet" href="./styles/style.css" />
+        <script type="text/javascript" src="../../scripts/geo.js"></script>
         <title>ჯოკერი</title>
     </head>
     <body>
@@ -11,10 +12,10 @@
                 <thead> 
                     <tr>
                         <th>სახელები</th>
-                        <th><input type="text" name="name" /></th>
-                        <th><input type="text" name="name" /></th>
-                        <th><input type="text" name="name" /></th>
-                        <th><input type="text" name="name" /></th>
+                        <th><input type="text" name="name" onkeypress="return makeGeo(this,event);"/></th>
+                        <th><input type="text" name="name" onkeypress="return makeGeo(this,event);"/></th>
+                        <th><input type="text" name="name" onkeypress="return makeGeo(this,event);"/></th>
+                        <th><input type="text" name="name" onkeypress="return makeGeo(this,event);"/></th>
                     </tr>
                 </thead>
                 <tbody>
