@@ -1,16 +1,17 @@
 // tamashis dro atuzvidan dasrulebamde
 // dro tito xels ramdeni dautmes
 
-var names = document.querySelectorAll("thead input"),
-calls = document.querySelectorAll("td input:first-of-type"),
-results = document.querySelectorAll("td input:nth-of-type(even)"),
+//--------------------VARIABLES----------------------
+
+const names = document.querySelectorAll("thead input"),
 shuffleBtn = document.getElementById("shuffle"),
 startBtn = document.getElementById("start"),
 callBtns = document.querySelectorAll("aside table button"),
 xishti = document.getElementById("xishti"),
 players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}],
-started = false,
-round = 0,
+gameTime = new Timer();
+
+let round = 0,
 turn = 0,
 activePlayer = null,
 roundOver = false,
@@ -18,6 +19,22 @@ turnCount = 0,
 wagebuliCount = 0,
 wasagebiCount = 0;
 
+//--------------------CONSTRUCTORS----------------------
+
+function Timer(){
+	this.seconds = 0;
+	this.minutes = 0;
+	this.start = function(){
+			this.key = setInterval( () => {
+			console.log(++this.seconds);
+			if(this.seconds % 60 === 0)
+				console.log(++this.minutes);
+		}, 1000);
+	};
+	this.stop = function(){
+		clearInterval(this.key);
+	}
+}
 
 //----------------------------------------------------------------------
 
@@ -39,6 +56,7 @@ function init(){
 			if(xishti.classList.contains("required"))
 				xishti.classList.remove("required");
 			toggleBtns(false);
+			gameTime.start();
 			play();
 		}
 		else 
@@ -195,6 +213,7 @@ function playRound(){
 	}
 	else
 	{
+		clearInterval(timer.key);
 		console.log("Game Over");
 	}
 }
