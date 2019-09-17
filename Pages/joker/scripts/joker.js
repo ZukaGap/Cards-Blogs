@@ -268,7 +268,8 @@ function autoFill(all=true){
 		if (9 === wagebuliCount)
 			addScore(activePlayer.calls[round].value, "პასი");
 		else
-			addScore(activePlayer.calls[round].value, 9 - wagebuliCount);
+			addScore(activePlayer.calls[round].value, String(9 - wagebuliCount));
+			console.log(wagebuliCount);
 		turn++;
 		playRound();
 	}
