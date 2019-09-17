@@ -183,8 +183,7 @@ function toggleBtns(enable){
 function playRound(){
 	if(roundOver)
 	{
-		if(round + 1)
-			liveScore();
+		liveScore();
 
 		if((round + 1) % 4 === 0)
 			writeScores();
@@ -331,26 +330,35 @@ function writeScores(){
 function liveScore()
 {
 	var player;
-	var lastRound;
 	var scoreDisplay;
+	let bestScore = 0;
+	let lowerScore = 0;
+	for(var k=0;k<4;k++)
+	{
+		lowerScore = roundDecOne(players[k].score);
+		if(bestScore < lowerScore)
+		{
+			bestScore = lowerScore;
+		}
+	}
 
-	for(var i = 0; i < 4; i++){
+	for(var i = 0; i < 4; i++)
+	{
 		player = players[i];
 		player.score = roundDecOne(player.score);
 		scoreDisplay = player.scoreDisplays[4];
 		
-		if(Math.floor(round) === 0){
-			lastRound = 0;
-		}
-		else{
-			lastRound = Number(player.scoreDisplays[4].innerHTML);
-		}
-		if(player.score > lastRound){
+		if(bestScore === player.score)
+		{
+			scoreDisplay.classList.contains("worse") ? scoreDisplay.classList.remove("worse") : null;
 			scoreDisplay.classList.add("better");
-		}
-		else if(player.score < lastRound){
-			scoreDisplay.classList.add("worse");
-		}
+		}			
+		else
+		{
+			scoreDisplay.classList.contains("better") ? scoreDisplay.classList.remove("better") : null;
+			scoreDisplay.classList.add("worse");	
+		}		
+
 		scoreDisplay.innerHTML = player.score;
 	}
 }
