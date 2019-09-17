@@ -183,6 +183,9 @@ function toggleBtns(enable){
 function playRound(){
 	if(roundOver)
 	{
+		if(round + 1)
+			liveScore();
+
 		if((round + 1) % 4 === 0)
 			writeScores();
 
@@ -322,6 +325,34 @@ function writeScores(){
 		scoreDisplay.innerHTML = player.score;
 	}
 	console.log("Number", (quarter+1), "Quarter:", gameTime.minutes, "Minutes and", gameTime.seconds, "Seconds.");
+}
+
+
+function liveScore()
+{
+	var player;
+	var lastRound;
+	var scoreDisplay;
+
+	for(var i = 0; i < 4; i++){
+		player = players[i];
+		player.score = roundDecOne(player.score);
+		scoreDisplay = player.scoreDisplays[4];
+		
+		if(Math.floor(round) === 0){
+			lastRound = 0;
+		}
+		else{
+			lastRound = Number(player.scoreDisplays[4].innerHTML);
+		}
+		if(player.score > lastRound){
+			scoreDisplay.classList.add("better");
+		}
+		else if(player.score < lastRound){
+			scoreDisplay.classList.add("worse");
+		}
+		scoreDisplay.innerHTML = player.score;
+	}
 }
 
 //--------------------MATH FUNCTIONS----------------------
