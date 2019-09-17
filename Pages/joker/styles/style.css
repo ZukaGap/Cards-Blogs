@@ -33,9 +33,10 @@ table tr:nth-child(odd) {
 }
 
 th input {
-  height: 21px;
-  width: calc(100% - 4px);
-  padding: 2px;
+  height: 20px;
+  width: calc(100% - 2px);
+  padding: 0;
+  border: 1px solid #959797;
 }
 
 td {
@@ -71,7 +72,7 @@ td input:first-of-type {
 
 section {
   display:grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
 }
 
 aside {

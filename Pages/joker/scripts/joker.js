@@ -9,7 +9,6 @@ var startBtn = document.getElementById("start");
 var callBtns = document.querySelectorAll("aside table button");
 var xishti = document.getElementById("xishti");
 var players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}];
-var gotNames = false;
 var started = false;
 var round = 0;
 var turn = 0;
@@ -38,7 +37,7 @@ function init(){
 		{
 			if(xishti.classList.contains("required"))
 				xishti.classList.remove("required");
-			this.setAttribute("disabled", true);
+			toggleBtns(false);
 			play();
 		}
 		else 
@@ -91,22 +90,40 @@ function checkNames()
 	{
 		name.addEventListener("focusout", function()
 		{
-			if(this.value !== "")
+			if(this.value !== "" && isUnique(this.value))
 			{
+				this.classList.contains("required") ? this.classList.remove("required") : null;
 				this.setAttribute("disabled", true);
 				count++;
-				gotNames = count ===  4 ? true : false;
-				enableBtns(gotNames);
+				console.log(count);
+				if(count === 3)
+					listenToLastInput();
+			}
+			else{
+				this.classList.add("required");
 			}
 		});
 	});
 };
 
+function isUnique(name){
+	var count = 0;
+	var unique = true;
+	names.forEach(function(otherName){
+		if(name === otherName.value){
+			count++;
+			if(count === 2){
+				unique = false;
+			}
+		}
+	});
+	return unique;
+}
+
 function shuffle()
 {
 	shuffleBtn.addEventListener("click",function()
 	{
-		this.style.backgroundColor="green";
 		this.setAttribute("disabled", true);
 		var first = Math.floor(Math.random()*4);
 		for(var i=0; i < first; i++){
@@ -119,10 +136,28 @@ function shuffle()
 	});
 };
 
-function enableBtns(){
-	if(gotNames){
+function listenToLastInput(){
+	names.forEach(function(name){
+		if(name.value === ""){
+			name.addEventListener("keyup", function(){
+				console.log(this.value);
+				if(this.value !== "" && isUnique(this.value))
+					toggleBtns(true)
+				else
+					toggleBtns(false);
+			})
+		}
+	});
+}
+
+function toggleBtns(enable){
+	if(enable){
 		shuffleBtn.removeAttribute("disabled");
 		startBtn.removeAttribute("disabled");
+	}
+	else{
+		shuffleBtn.setAttribute("disabled", true);
+		startBtn.setAttribute("disabled", true);
 	}
 }
 
