@@ -204,10 +204,22 @@ function playRound(){
 	if(roundOver)
 	{
 		liveScore();
-
-		if((round + 1) % 4 === 0)
-			writeScores();
-
+		switch(round)
+		{
+			case 8:
+				writeScores();
+			break;
+			case 12:
+				writeScores();
+			break;
+			case 20:
+				writeScores();
+			break;
+			case 24:
+				writeScores();
+			break;
+		}
+		
 		round++;
 		turnCount = 0;
 		roundOver = false;
@@ -215,7 +227,7 @@ function playRound(){
 		wagebuliCount = 0;
 		wasagebiCount = 0;
 	}
-	if(round < 16)
+	if(round < 24)
 	{
 		activePlayer = players[(round + turn) % 4];
 		if(turnCount < 4){
@@ -322,28 +334,73 @@ function calcOutcome(){
 
 function writeScores(){
 	var player;
-	var quarter = Math.floor(round / 4);
+	var firstEighth = false;
+	var secondEighth = false;
+	var firstQuarter = false;
+	var secondQuarter = false;
+	switch(Math.floor(round))
+	{
+		case 8:
+			firstEighth = true;
+		break;
+		case 12:
+			firstQuarter = true;
+		break;
+		case 20:
+			secondEighth = true;
+		break;
+		case 24:
+			secondQuarter = true;
+		break;
+	}	
+	
 	var lastQuarterScore;
 	var scoreDisplay;
-	for(var i = 0; i < 4; i++){
+	for(var i = 0; i < 4; i++)
+	{
 		player = players[i];
 		player.score = roundDecOne(player.score);
-		scoreDisplay = player.scoreDisplays[quarter];
-		if(quarter === 0){
-			lastQuarterScore = 0;
+		if(firstEighth)
+		{
+			scoreDisplay = player.scoreDisplays[0];
+			firstEighth = false;
 		}
-		else{
-			lastQuarterScore = Number(player.scoreDisplays[quarter - 1].innerHTML);
+		else if(firstQuarter)
+		{
+			scoreDisplay = player.scoreDisplays[1];
+			firstQuarter = false;
 		}
-		if(player.score > lastQuarterScore){
-			scoreDisplay.classList.add("better");
+		else if(secondEighth)
+		{
+			scoreDisplay = player.scoreDisplays[2];
+			secondEighth = false;
 		}
-		else if(player.score < lastQuarterScore){
-			scoreDisplay.classList.add("worse");
+		else if(secondQuarter)
+		{
+			scoreDisplay = player.scoreDisplays[3];
+			secondQuarter = false;			
 		}
-		scoreDisplay.innerHTML = player.score;
+	scoreDisplay.innerHTML = player.score;
 	}
-	console.log("Number", (quarter+1), "Quarter:", gameTime.minutes, "Minutes and", gameTime.seconds, "Seconds.");
+
+	// for(var i = 0; i < 4; i++){
+	// 	player = players[i];
+	// 	player.score = roundDecOne(player.score);
+	// 	scoreDisplay = player.scoreDisplays[quarter];
+	// 	if(quarter === 0){
+	// 		lastQuarterScore = 0;
+	// 	}
+	// 	else{
+	// 		lastQuarterScore = Number(player.scoreDisplays[quarter - 1].innerHTML);
+	// 	}
+	// 	if(player.score > lastQuarterScore){
+	// 		scoreDisplay.classList.add("better");
+	// 	}
+	// 	else if(player.score < lastQuarterScore){
+	// 		scoreDisplay.classList.add("worse");
+	// 	}
+	// 	scoreDisplay.innerHTML = player.score;
+	// }
 }
 
 
