@@ -1,0 +1,165 @@
+@font-face {
+  font-family: "bpg_extrasquare_mtavruli_2009";
+  src: url("../../../fonts/bpg_extrasquare_mtavruli_2009.ttf");
+}
+
+* {
+  font-family: "bpg_extrasquare_mtavruli_2009";
+  font-weight: 900;
+  text-align: center;
+}
+
+body {
+  background-color: #dfe6e9;
+}
+
+table, th, td {
+  border: 1.5px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+table th {
+  background-color:#b2bec3;
+  color: black;
+  padding: 0px;
+}
+
+table tr:nth-child(even) {
+  background-color: #eee;
+}
+table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+th input {
+  height: 20px;
+  width: calc(100% - 2px);
+  padding: 0;
+  border: 1px solid #959797;
+}
+
+td {
+  width: 100px;
+  height: 20px;
+  text-align: center;
+  padding: 3px;
+}
+
+input {
+    background-color: #959797;
+    border: none;
+    outline: none;
+    height: 100%;
+    width:100%;
+}
+
+td input {
+  display: inline-block;
+  width: 50px;
+  cursor: default;
+}
+
+td input:first-of-type {
+  margin-right: 10px;
+  width: 85px;
+  cursor: pointer;
+}
+
+#shuffle {
+  float: right;
+}
+
+section {
+  display:grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+}
+
+aside {
+    justify-self: center;
+    border: none;
+}
+
+aside  table {
+  width: 250px;
+  height: 250px;
+  border: none;
+}
+
+aside table button {
+  height: 100%;
+  width: 100%;    
+  font-size: 1.5em;  
+  border-radius: 10px;
+  border: none;
+}
+
+table thead td{
+  border: none;
+}
+
+aside td {
+  padding: 1px;
+  background-color: #dfe6e9;
+  border: none;
+}
+
+.turn {
+  background-color: aquamarine;
+}
+
+.live {
+  background-color: cyan;
+}
+
+#xishti {
+  display: inline-block;
+  width: 100px;
+  height: auto;
+  padding-left: 5px; 
+}
+
+.required {
+  border: 1px solid red;
+}
+
+.fail-full {
+  color: red;
+  font-weight: bolder;
+}
+
+.fail-half {
+  color: rgb(136, 36, 36);
+  font-weight: bolder;
+}
+
+.success {
+  color: greenyellow;
+  font-weight: bolder;
+}
+
+.success-full {
+  color: greenyellow;
+  font-weight: bolder;
+}
+
+.better {
+  color: rgb(44, 175, 44);
+  font-weight: bolder;
+}
+
+.worse {
+  color: rgb(122, 4, 4);
+  font-weight: bolder;
+}
+
+.timer {
+  font-size: 25px;
+  margin-top: 15px;
+  color: #ff3f34;
+}
+
+#seconds {
+  font-size: 20px;
+  color: #ff3f34;
+}
