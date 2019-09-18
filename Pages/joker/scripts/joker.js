@@ -8,24 +8,25 @@ shuffleBtn = document.getElementById("shuffle"),
 startBtn = document.getElementById("start"),
 callBtns = document.querySelectorAll("aside table button"),
 xishti = document.getElementById("xishti"),
-timeDisplay = {
-	minutes: document.getElementById("minutes"),
-	seconds: document.getElementById("seconds"),
-	updateMinutes: (minutes ) => {		
-		this.minutes.innerHTML = minutes;	
+timer = {
+	minutes: 0,
+	minutesDispaly: document.getElementById("minutes"),
+	seconds: 0,
+	secondsDisplay: document.getElementById("seconds"),
+	keys: [null, null],
+	update: (display, value) => display.innerHTML = value,
+	start: function(){
+		this.keys[0] = setInterval( () => {
+			this.seconds = -1; // so the seconds will display 0 and not 
+			this.update(this.minutesDispaly, ++this.minutes);
+		}, 60000);
+		this.keys[1] = setInterval( () => {
+			this.update(this.secondsDisplay, ++this.seconds);
+		}, 1000);
 	},
-
-	updateSeconds: (seconds) => {		
-		this.seconds.innerHTML = seconds;		
-	},
-
-	init: function()  {
-		this.updateMinutes(0);
-		this.updateSeconds(0);
-	}
+	stop: function(){this.keys.forEach( (key) => clearInterval(key))}
 }
-players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}],
-gameTime = new Timer(timeDisplay);
+players = [player1 = {	id: 0, score:0	}, player2 = {	id: 1, score:0	}, player3 = {	id: 2, score:0	}, player4 = {	id: 3, score:0	}];
 
 let round = 0,
 turn = 0,
@@ -34,27 +35,6 @@ roundOver = false,
 turnCount = 0,
 wagebuliCount = 0,
 wasagebiCount = 0;
-
-//--------------------CONSTRUCTORS----------------------
-
-function Timer(display){
-	this.seconds = 0;
-	this.minutes = 0;	
-	this.start = function(){
-			display.init();
-			this.key = setInterval( () => {	
-			display.updateSeconds(++this.seconds);			
-			if(this.seconds % 60 === 0)
-			{
-				display.updateMinutes(++this.minutes);
-				this.seconds = this.seconds % 60 ;
-			}
-		}, 1000);
-	};
-	this.stop = function(){
-		clearInterval(this.key);
-	}
-}
 
 //----------------------------------------------------------------------
 
@@ -76,7 +56,7 @@ function init(){
 			if(xishti.classList.contains("required"))
 				xishti.classList.remove("required");
 			toggleBtns(false);
-			gameTime.start();
+			timer.start();
 			play();
 		}
 		else 
@@ -235,7 +215,7 @@ function playRound(){
 	}
 	else
 	{
-		gameTime.stop();
+		timer.stop();
 		console.log("Game Over");
 	}
 }
@@ -343,7 +323,6 @@ function writeScores(){
 		}
 		scoreDisplay.innerHTML = player.score;
 	}
-	console.log("Number", (quarter+1), "Quarter:", gameTime.minutes, "Minutes and", gameTime.seconds, "Seconds.");
 }
 
 
